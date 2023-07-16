@@ -18,27 +18,13 @@ listContainerEl.style.display = "flex";
 listContainerEl.style.gap = "20px";
 listContainerEl.style.justifyContent = "center";
 
-// Функція перебору масиву та створення тегів li
-const makeGaleryItems = (options) => {
-  return options.map(({ url, alt }) => {
-    const listEl = document.createElement("li");
-    listEl.style.listStyle = "none";
-    listEl.style.width = "440px";
-    listEl.style.padding = "20px";
-    listEl.style.backgroundColor = "#eee";
+const imageGaleryMarkup = images
+  .map(
+    ({ url, alt }) =>
+      `<li style="list-style: none; width: 440px; padding: 20px; background-color: #eee;"><img src="${url}" alt="${alt}" width="400"></li>`
+  )
+  .join("");
 
-    listEl.insertAdjacentHTML(
-      "afterbegin",
-      `<img src="${url}" alt="${alt}" width="400">`
-    );
-    console.log(listEl);
 
-    return listEl;
-  });
-};
-
-// Створюємо масив картинок
-const imageGaleryMarkup = makeGaleryItems(images);
-
-// Добавляємо розпиляючі масив в <ul>
-listContainerEl.append(...imageGaleryMarkup);
+// Добавляємо в <ul>
+listContainerEl.insertAdjacentHTML("afterbegin", imageGaleryMarkup);

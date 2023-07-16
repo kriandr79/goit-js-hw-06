@@ -7,37 +7,49 @@ const refs = {
 
 refs.createBtn.addEventListener("click", onCreateBtn);
 refs.destroyBtn.addEventListener("click", onDestroyBtn);
-refs.input.addEventListener("change", onInputChange);
 
 function onCreateBtn() {
-  if (refs.input.value === "") {
+  // змінюємо тип, на випадок якщо значення введено вручну
+  const inputValue = Number(refs.input.value);
+  
+  if (inputValue === "") {
     alert("Please, insert a quantity of boxes");
   } else {
-    refs.boxes.append(createBoxes(refs.input.value));
+    refs.boxes.append(createBoxes(inputValue));
   }
 }
 
 function onDestroyBtn() {
   refs.boxes.innerHTML = "";
+  refs.input.value = "";
 }
 
+// Функція повертає зібранний фрагмент, тобто потрібну кількість боксів, яка потім пушится на сторінку при в onCreateBtn
 function createBoxes(amount) {
-  // создаем пустой елемент
+   
+  // створюємо порожній елемент для наповнення
   const fragment = document.createDocumentFragment();
+  const inputMin = Number(refs.input.min);
+  const inputMax = Number(refs.input.max);
+  const inputStep = Number(refs.input.step);
   let baseBoxSize = 30;
-
-  // в цикле перебираем амоунт создавая дивы и добавляя свойства
-  for (let i = 1; i <= amount; i += 1) {
-    console.log(baseBoxSize);
-    const divEl = document.createElement("div");
-    divEl.style.width = baseBoxSize + "px";
-    divEl.style.height = baseBoxSize + "px";
-    divEl.style.backgroundColor = getRandomHexColor();
-    fragment.appendChild(divEl);
-    baseBoxSize += 10;
+ 
+  // Перевіряємо введені значення. Якщо ок, то створюємо бокси (div)
+  if (amount < inputMin || amount > inputMax) {
+    alert(`Please, insert value between ${inputMin} and ${inputMax}!`);
+  } else {
+  
+    for (let i = 1; i <= amount; i += inputStep) {
+      const divEl = document.createElement("div");
+      divEl.style.width = baseBoxSize + "px";
+      divEl.style.height = baseBoxSize + "px";
+      divEl.style.backgroundColor = getRandomHexColor();
+      fragment.appendChild(divEl);
+      baseBoxSize += 10;
+    }
   }
-
   return fragment;
+
 }
 
 function getRandomHexColor() {

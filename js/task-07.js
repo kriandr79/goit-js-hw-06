@@ -3,6 +3,9 @@ const textElement = document.getElementById("text");
 
 inputElement.addEventListener("change", onInputChange);
 
-function onInputChange(event) {
-  textElement.style.fontSize = event.target.value + "px";
+function onInputChange() {
+  textElement.style.fontSize = inputElement.value + "px";
 }
+
+// вызываем функцию сразу чтобы синхронизировать размер текста со значением импута по умолчанию
+onInputChange();
