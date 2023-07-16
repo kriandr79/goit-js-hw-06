@@ -17,7 +17,6 @@ function onCreateBtn() {
   } else {
     // refs.boxes.append(createBoxes(inputValue));
     refs.boxes.insertAdjacentHTML("afterbegin", createBoxes(inputValue));
-    // console.log(createBoxes(inputValue));
   }
 }
 
